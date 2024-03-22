@@ -5,7 +5,7 @@ class Player {
 	int x;
 	int y;
 public:
-	Player(int _x, int _y);
+	Player(int _x=0, int _y=0);
 	
 	int getX();
 	void setX(int _x);

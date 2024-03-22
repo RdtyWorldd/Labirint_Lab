@@ -20,8 +20,16 @@ class Game {
 public:
 	Game(Player& player);
 	//void addPlayer(Player& player);
-	void loadMaze(string file);
+	Game(const Game& _game);
+
+	int getHigh() const;
+	int getWide() const;
+	//void loadMaze(string file);
 	void move(Action act);
+	
+	Game& operator = (const Game& game);
 	friend ostream& operator <<(ostream& out, const Game& game);
+	friend istream& operator >> (istream& in, Game& game);
+
 	~Game();
 };

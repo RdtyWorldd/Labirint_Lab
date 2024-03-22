@@ -5,7 +5,7 @@
 
 void run(Game game)
 {
-	game.loadMaze("maze.txt");
+	//game.loadMaze("maze.txt");
 
 	unsigned char key = _getch();
 	while (key != 27) {
@@ -35,12 +35,19 @@ void run(Game game)
 
 int main() {
 	Player player(1, 2);
+	Game game(player);
 	Game game1(player);
 
-	game1.loadMaze("maze.txt");
-	cout << game1;
+	{
+		ifstream file("maze.txt");
+		file >> game1;
+	}
 
-	run(game1);
+	//game1.loadMaze("maze.txt");
+	cout << game1;
+	game = game1;
+
+	run(game);
 //	Game game(player);
 //	game = game1;
 		

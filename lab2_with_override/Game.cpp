@@ -1,29 +1,27 @@
 #include "Game.h"
 
 Game::Game(Player& _player) : maze(nullptr), player(_player), high(0), wide(0) {}
-Game::~Game() {
-	delete[] maze;
-}
 
-void Game::loadMaze(string fileName) {
-	ifstream file(fileName);
-	
-	file >> high >> wide;
+Game::Game(const Game& _game): player(_game.player) {
+	high = _game.high;
+	wide = _game.wide;
+
 	Cell* tmp = new Cell[high * wide];
-	maze = new Cell* [high];
-	/*подумать про реализацию правильно лежащего в двумерного памяти массива*/
-	
+
+	maze = new Cell * [high];
 	for (size_t i = 0; i < high; i++) {
 		maze[i] = tmp + wide * i;
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			file >> maze[i][j];
+			maze[i][j] = _game.maze[i][j];
 		}
 	}
+}
 
-	maze[player.getY()][player.getX()] + player;
+Game::~Game() {
+	delete[] maze;
 }
 
 void Game::move(Action act) {
@@ -55,6 +53,54 @@ void Game::move(Action act) {
 		player.setX(x);
 		player.setY(y);
 	}
+}
+
+Game& Game::operator= (const Game& _game) {
+	if (maze == nullptr) {
+		delete[] maze;
+	}
+
+	player = _game.player;
+	high = _game.high;
+	wide = _game.wide;
+
+	Cell* tmp = new Cell[high * wide];
+
+	maze = new Cell * [high];
+	for (size_t i = 0; i < high; i++) {
+		maze[i] = tmp + wide * i;
+	}
+
+	for (size_t i = 0; i < high; i++) {
+		for (size_t j = 0; j < wide; j++) {
+			maze[i][j] = _game.maze[i][j];
+		}
+	}
+	return *this;
+}
+
+istream& operator >>(istream& in, Game& game) {
+	in >> game.high >> game.wide;
+	Cell* tmp = new Cell[game.high * game.wide];
+
+	if (game.maze == nullptr) {
+		delete[] game.maze;
+	}
+	game.maze = new Cell * [game.high];
+	/*подумать про реализацию правильно лежащего в двумерного памяти массива*/
+
+	for (size_t i = 0; i < game.high; i++) {
+		game.maze[i] = tmp + game.wide * i;
+	}
+
+	for (size_t i = 0; i < game.high; i++) {
+		for (size_t j = 0; j < game.wide; j++) {
+			in >> game.maze[i][j];
+		}
+	}
+
+	game.maze[game.player.getY()][game.player.getX()] + game.player;
+	return in;
 }
 
 ostream& operator <<(ostream& out, const Game& game) {

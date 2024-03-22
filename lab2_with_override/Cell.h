@@ -5,7 +5,6 @@
 using namespace std;
 
 class Cell {
-	bool filled;
 	Player* hero;
 public:
 	Cell();
@@ -13,10 +12,9 @@ public:
 
 	Player& getHero();
 	void setHero(Player* _hero);
-	bool isFilled();
-	void setFilled();
+	virtual bool hasAdd();
 
-	Cell& operator =(const Cell& _cell);
+	virtual Cell& operator =(const Cell& _cell);
 
 	Cell operator +(Player& player);
 	Cell operator -(Player& player);
@@ -24,6 +22,8 @@ public:
 	void operator +=(Player& player);
 	void operator -=(Player& player);
 
-	friend ostream & operator << (ostream & out, const Cell & cell);
-	friend istream& operator >> (istream& in, Cell& cell);
+	virtual void visit(ostream& out) const;
+	//friend ostream & operator << (ostream & out, const Cell & cell);
+	//friend istream& operator >> (istream& in, Cell& cell);
 };
+

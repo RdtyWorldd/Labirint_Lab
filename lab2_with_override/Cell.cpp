@@ -1,7 +1,6 @@
 #include "Cell.h"
 
 Cell::Cell() {
-	filled = false;
 	hero = nullptr;
 }
 
@@ -11,17 +10,18 @@ Cell::Cell(const Cell& _cell) {
 		hero = new Player();
 		*hero = *(_cell.hero);
 	}
-
-	filled = _cell.filled;
 }
+
 void Cell::setHero(Player* _hero) { hero = _hero; }
-bool Cell::isFilled() { return filled; }
+
+bool Cell::hasAdd() {
+	return true;
+}
 
 Cell& Cell::operator=(const Cell& _cell) {
 	if (hero != nullptr)
 		delete[] hero;
 	hero = _cell.hero;
-	filled = _cell.filled;
 	return *this;
 }
 
@@ -47,6 +47,16 @@ void Cell::operator -=(Player& Player) {
 	hero = nullptr;
 }
 
+void Cell::visit(ostream& out) const {
+	if (hero) {
+		out << "@";
+	}
+	else {
+		out << " ";
+	}
+}
+
+/*
 ostream& operator <<(ostream & out, const Cell & cell) {
 	if (cell.filled) {
 		return out << "#";
@@ -63,8 +73,10 @@ ostream& operator <<(ostream & out, const Cell & cell) {
 istream& operator >>(istream& in, Cell& cell) {
 	unsigned char tmp;
 	in >> tmp;
-	if (tmp == '#')
-		cell.filled = true;
-	
+	if (tmp == '#') {
+		cell = (Cell)Wall();
+	}
+		
 	return in;
 }
+*/

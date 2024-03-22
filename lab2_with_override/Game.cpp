@@ -10,17 +10,19 @@ Game::Game(const Game& _game): player(_game.player) {
 		maze = nullptr;
 		return;
 	}
-
-	Cell* tmp = new Cell[high * wide];
-
-	maze = new Cell * [high];
+	maze = new Cell** [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = tmp + wide * i;
+		maze[i] = new Cell * [wide];
+	}
+	for (size_t i = 0; i < high; i++) {
+		for (size_t j = 0; j < wide; j++) {
+			maze[i][j] = new Cell();
+		}
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j];
+			*(maze[i][j]) = *(_game.maze[i][j]);
 		}
 	}
 }
@@ -49,61 +51,75 @@ void Game::move(Action act) {
 		break;
 	}
 
-	if ((x < 0) || (y < 0) ||(x >= wide) || (y >= high) || maze[y][x].isFilled()) {
+	if ((x < 0) || (y < 0) ||(x >= wide) || (y >= high) || !maze[y][x]->hasAdd()) {
 		return;
 	} 
 	else {
-		maze[player.getY()][player.getX()] -= player;
-		maze[y][x] += player;
+		*(maze[player.getY()][player.getX()]) -= player;
+		*(maze[y][x]) += player;
 		player.move(x, y);
 	}
 }
 
 Game& Game::operator= (const Game& _game) {
-	if (maze != nullptr) {
-		delete[] maze;
-	}
-
 	player = _game.player;
 	high = _game.high;
 	wide = _game.wide;
 
-	Cell* tmp = new Cell[high * wide];
+	if (maze != nullptr) {
+		delete[] maze;
+	}
 
-	maze = new Cell * [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = tmp + wide * i;
+		maze[i] = new Cell * [wide];
+	}
+	for (size_t i = 0; i < high; i++) {
+		for (size_t j = 0; j < wide; j++) {
+			maze[i][j] = new Cell();
+		}
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j];
+			*(maze[i][j]) = *(_game.maze[i][j]);
 		}
 	}
 	return *this;
 }
 
 istream& operator >>(istream& in, Game& game) {
-	in >> game.high >> game.wide;
-	Cell* tmp = new Cell[game.high * game.wide];
-
-	if (game.maze == nullptr) {
+	int high, wide;
+	in >> high >> wide;
+	if (game.maze != nullptr)
 		delete[] game.maze;
-	}
-	game.maze = new Cell * [game.high];
-	/*подумать про реализацию правильно лежащего в двумерного памяти массива*/
 
-	for (size_t i = 0; i < game.high; i++) {
-		game.maze[i] = tmp + game.wide * i;
-	}
+	//Cell** tmp = new Cell* [high * wide]();
+	Cell*** maze = new Cell** [high];
 
-	for (size_t i = 0; i < game.high; i++) {
-		for (size_t j = 0; j < game.wide; j++) {
-			in >> game.maze[i][j];
+	//for (int i = 0; i < high * wide; i++)
+	//	tmp[i] = new Cell();
+	//for (int i = 0; i < high * wide; i++){
+	//	in >> *(tmp[i]);
+	//}
+
+	for (size_t i = 0; i < high; i++) {
+		maze[i] = new Cell* [wide];
+	}
+	for (size_t i = 0; i < high; i++) {
+		for (size_t j = 0; j < wide; j++) {
+			maze[i][j] = new Cell();
+		}
+	}
+	for (size_t i = 0; i < high; i++) {
+		for (size_t j = 0; j < wide; j++) {
+			in >> &maze[i][j];
 		}
 	}
 
-	game.maze[game.player.getY()][game.player.getX()] += game.player;
+	game.high = high;
+	game.wide = wide;
+	game.maze = maze;
+	*(game.maze[game.player.getY()][game.player.getX()]) += game.player;
 	return in;
 }
 
@@ -117,3 +133,18 @@ ostream& operator <<(ostream& out, const Game& game) {
 	return out;
 }
 
+ostream& operator <<(ostream& out, const Cell* cell) {
+	cell->visit(out);
+	return out;
+}
+
+istream& operator >>(istream& in, Cell**cell) {
+	unsigned char tmp;
+	in >> tmp;
+	if (tmp == '#') {
+		delete *cell;
+		*cell = new Wall();
+	}
+
+	return in;
+}

@@ -4,6 +4,7 @@
 #include <fstream>
 
 #include "Cell.h"
+#include "Wall.h"
 #include "Player.h"
 
 enum Action {
@@ -16,12 +17,11 @@ enum Action {
 class Game {
 	int high, wide;
 	Player& player;
-	Cell** maze;
+	Cell** * maze;
 public:
 	Game(Player& player);
 	//void addPlayer(Player& player);
 	Game(const Game& _game);
-
 	int getHigh() const;
 	int getWide() const;
 	//void loadMaze(string file);
@@ -33,3 +33,6 @@ public:
 
 	~Game();
 };
+
+ostream& operator <<(ostream& out, const Cell* cell);
+istream& operator >>(istream& in, Cell** cell);

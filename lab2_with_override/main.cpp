@@ -38,10 +38,17 @@ int main() {
 	Game game(player);
 	Game game1(player);
 
+	//Cell* cell = new Cell();
+	//Wall* wall = new Wall();
+	//cout << *cell << *wall <<endl;
+	//cell = wall;
+	//cout << *cell;
+	//return 0;
 	{
 		ifstream file("maze.txt");
 		file >> game1;
 	}
+
 
 	//game1.loadMaze("maze.txt");
 	//game = game1;
@@ -50,6 +57,4 @@ int main() {
 	run(game1);
 //	Game game(player);
 //	game = game1;
-		
-
 }

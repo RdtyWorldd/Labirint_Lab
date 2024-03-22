@@ -44,10 +44,10 @@ int main() {
 	}
 
 	//game1.loadMaze("maze.txt");
+	//game = game1;
 	cout << game1;
-	game = game1;
 
-	run(game);
+	run(game1);
 //	Game game(player);
 //	game = game1;
 		

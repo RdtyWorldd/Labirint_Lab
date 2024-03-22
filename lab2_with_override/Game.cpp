@@ -5,6 +5,11 @@ Game::Game(Player& _player) : maze(nullptr), player(_player), high(0), wide(0) {
 Game::Game(const Game& _game): player(_game.player) {
 	high = _game.high;
 	wide = _game.wide;
+	if (_game.maze == nullptr)
+	{
+		maze = nullptr;
+		return;
+	}
 
 	Cell* tmp = new Cell[high * wide];
 
@@ -48,15 +53,14 @@ void Game::move(Action act) {
 		return;
 	} 
 	else {
-		maze[player.getY()][player.getX()] - player;
-		maze[y][x] + player;
-		player.setX(x);
-		player.setY(y);
+		maze[player.getY()][player.getX()] -= player;
+		maze[y][x] += player;
+		player.move(x, y);
 	}
 }
 
 Game& Game::operator= (const Game& _game) {
-	if (maze == nullptr) {
+	if (maze != nullptr) {
 		delete[] maze;
 	}
 
@@ -99,7 +103,7 @@ istream& operator >>(istream& in, Game& game) {
 		}
 	}
 
-	game.maze[game.player.getY()][game.player.getX()] + game.player;
+	game.maze[game.player.getY()][game.player.getX()] += game.player;
 	return in;
 }
 

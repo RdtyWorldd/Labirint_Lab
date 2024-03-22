@@ -6,16 +6,23 @@ using namespace std;
 
 class Cell {
 	bool filled;
-	bool hero;
+	Player* hero;
 public:
 	Cell();
-	bool isHero();
-	void setHero(bool _hero);
+	Cell(const Cell& _cell);
+
+	Player& getHero();
+	void setHero(Player* _hero);
 	bool isFilled();
 	void setFilled();
 
-	Cell operator +(const Player& player);
-	Cell operator -(const Player& player);
+	Cell& operator =(const Cell& _cell);
+
+	Cell operator +(Player& player);
+	Cell operator -(Player& player);
+
+	void operator +=(Player& player);
+	void operator -=(Player& player);
 
 	friend ostream & operator << (ostream & out, const Cell & cell);
 	friend istream& operator >> (istream& in, Cell& cell);

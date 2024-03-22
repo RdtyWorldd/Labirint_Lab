@@ -2,20 +2,49 @@
 
 Cell::Cell() {
 	filled = false;
-	hero = false;
+	hero = nullptr;
 }
 
-void Cell::setHero(bool _hero) { hero = _hero; }
+Cell::Cell(const Cell& _cell) {
+	hero = nullptr;
+	if (_cell.hero != nullptr) {
+		hero = new Player();
+		*hero = *(_cell.hero);
+	}
+
+	filled = _cell.filled;
+}
+void Cell::setHero(Player* _hero) { hero = _hero; }
 bool Cell::isFilled() { return filled; }
 
-Cell Cell::operator+(const Player & player) {
-	hero = true;
+Cell& Cell::operator=(const Cell& _cell) {
+	if (hero != nullptr)
+		delete[] hero;
+	hero = _cell.hero;
+	filled = _cell.filled;
 	return *this;
 }
 
-Cell Cell::operator-(const Player& player) {
-	hero = false;
-	return *this;
+Cell Cell::operator+(Player & player) {
+	Cell cell = *this;
+	cell.hero = &player;
+
+	return cell;
+}
+
+Cell Cell::operator-(Player& player) {
+	Cell cell = *this;
+	cell.hero = nullptr;
+
+	return cell;;
+}
+
+void Cell::operator +=(Player& player) {
+	hero = &player;
+}
+
+void Cell::operator -=(Player& Player) {
+	hero = nullptr;
 }
 
 ostream& operator <<(ostream & out, const Cell & cell) {

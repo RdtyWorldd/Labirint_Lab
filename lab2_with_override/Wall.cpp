@@ -7,7 +7,3 @@ void Wall::visit(ostream& out) const {
 bool Wall::hasAdd() {
 	return false;
 }
-
-Cell& Wall::operator=(const Cell& cell) {
-	return *this;
-}

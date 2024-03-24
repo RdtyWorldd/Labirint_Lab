@@ -12,6 +12,10 @@ Cell::Cell(const Cell& _cell) {
 	}
 }
 
+Cell::~Cell() {
+	delete hero;
+}
+
 void Cell::setHero(Player* _hero) { hero = _hero; }
 
 bool Cell::hasAdd() {
@@ -56,27 +60,3 @@ void Cell::visit(ostream& out) const {
 	}
 }
 
-/*
-ostream& operator <<(ostream & out, const Cell & cell) {
-	if (cell.filled) {
-		return out << "#";
-	}
-	else if (cell.hero) {
-		return out << "@";
-	}
-	else {
-		return out << " ";
-	}
-	
-}
-
-istream& operator >>(istream& in, Cell& cell) {
-	unsigned char tmp;
-	in >> tmp;
-	if (tmp == '#') {
-		cell = (Cell)Wall();
-	}
-		
-	return in;
-}
-*/

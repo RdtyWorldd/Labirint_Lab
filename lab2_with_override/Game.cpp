@@ -10,19 +10,18 @@ Game::Game(const Game& _game): player(_game.player) {
 		maze = nullptr;
 		return;
 	}
-	maze = new Cell** [high];
+
+	maze = new SCell * [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = new Cell * [wide];
-	}
-	for (size_t i = 0; i < high; i++) {
+		maze[i] = new SCell[wide];
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = new Cell();
+			maze[i][j].setCell(new Cell());
 		}
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			*(maze[i][j]) = *(_game.maze[i][j]);
+			maze[i][j] = _game.maze[i][j];
 		}
 	}
 }
@@ -55,8 +54,8 @@ void Game::move(Action act) {
 		return;
 	} 
 	else {
-		*(maze[player.getY()][player.getX()]) -= player;
-		*(maze[y][x]) += player;
+		*(maze[player.getY()][player.getX()].getCell()) -= player;
+		*(maze[y][x].getCell()) += player;
 		player.move(x, y);
 	}
 }
@@ -70,18 +69,22 @@ Game& Game::operator= (const Game& _game) {
 		delete[] maze;
 	}
 
-	for (size_t i = 0; i < high; i++) {
-		maze[i] = new Cell * [wide];
+	if (_game.maze == nullptr) {
+		maze = nullptr;
+		return *this;
 	}
+
+	maze = new SCell * [high];
 	for (size_t i = 0; i < high; i++) {
+		maze[i] = new SCell[wide];
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = new Cell();
+			maze[i][j].setCell(new Cell());
 		}
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			*(maze[i][j]) = *(_game.maze[i][j]);
+			maze[i][j] = _game.maze[i][j];
 		}
 	}
 	return *this;
@@ -93,40 +96,31 @@ istream& operator >>(istream& in, Game& game) {
 	if (game.maze != nullptr)
 		delete[] game.maze;
 
-	//Cell** tmp = new Cell* [high * wide]();
-	Cell*** maze = new Cell** [high];
-
-	//for (int i = 0; i < high * wide; i++)
-	//	tmp[i] = new Cell();
-	//for (int i = 0; i < high * wide; i++){
-	//	in >> *(tmp[i]);
-	//}
-
+	game.maze = new SCell * [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = new Cell* [wide];
-	}
-	for (size_t i = 0; i < high; i++) {
+		game.maze[i] = new SCell[wide];
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = new Cell();
+			game.maze[i][j].setCell(new Cell());
 		}
 	}
+
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			in >> &maze[i][j];
+			in >> game.maze[i][j];
 		}
 	}
 
 	game.high = high;
 	game.wide = wide;
-	game.maze = maze;
-	*(game.maze[game.player.getY()][game.player.getX()]) += game.player;
+	//game.maze = maze;
+	*(game.maze[game.player.getY()][game.player.getX()].getCell()) += game.player;
 	return in;
 }
 
 ostream& operator <<(ostream& out, const Game& game) {
 	for (size_t i = 0; i < game.high; i++) {
 		for (size_t j = 0; j < game.wide; j++) {
-			out << game.maze[i][j];
+			game.maze[i][j]->visit(out);
 		}
 		out << endl;
 	}
@@ -138,13 +132,13 @@ ostream& operator <<(ostream& out, const Cell* cell) {
 	return out;
 }
 
-istream& operator >>(istream& in, Cell**cell) {
-	unsigned char tmp;
-	in >> tmp;
-	if (tmp == '#') {
-		delete *cell;
-		*cell = new Wall();
-	}
-
-	return in;
-}
+//istream& operator >>(istream& in, SCell scell) {
+//	unsigned char tmp;
+//	in >> tmp;
+//	if (tmp == '#') {
+//		delete *cell;
+//		*cell = new Wall();
+//	}
+//
+//	return in;
+//}

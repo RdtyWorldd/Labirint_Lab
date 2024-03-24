@@ -9,6 +9,7 @@ class Cell {
 public:
 	Cell();
 	Cell(const Cell& _cell);
+	virtual ~Cell();
 
 	Player& getHero();
 	void setHero(Player* _hero);

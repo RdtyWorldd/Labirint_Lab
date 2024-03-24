@@ -5,5 +5,4 @@ class Wall : public Cell {
 public:
 	virtual void visit(ostream& out) const;
 	virtual bool hasAdd();
-	virtual Cell& operator =(const Cell& cell);
 };

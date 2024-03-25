@@ -1,6 +1,7 @@
 #pragma once
 #include "Cell.h"
 #include "Wall.h"
+#include "Treasure.h"
 
 class SCell {
 	int wachers;

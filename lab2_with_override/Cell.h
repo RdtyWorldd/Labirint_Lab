@@ -5,6 +5,7 @@
 using namespace std;
 
 class Cell {
+protected:
 	Player* hero;
 public:
 	Cell();
@@ -17,8 +18,8 @@ public:
 
 	virtual Cell& operator =(const Cell& _cell);
 
-	Cell operator +(Player& player);
-	Cell operator -(Player& player);
+	virtual Cell operator +(Player& player);
+	virtual Cell operator -(Player& player);
 
 	void operator +=(Player& player);
 	void operator -=(Player& player);

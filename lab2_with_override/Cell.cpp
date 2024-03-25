@@ -13,7 +13,8 @@ Cell::Cell(const Cell& _cell) {
 }
 
 Cell::~Cell() {
-	delete hero;
+	if(!hero)
+		delete hero;
 }
 
 void Cell::setHero(Player* _hero) { hero = _hero; }
@@ -23,8 +24,10 @@ bool Cell::hasAdd() {
 }
 
 Cell& Cell::operator=(const Cell& _cell) {
-	if (hero != nullptr)
-		delete[] hero;
+	if (&_cell == this)
+		return *this;
+	//if (hero != nullptr)
+	//	delete[] hero;
 	hero = _cell.hero;
 	return *this;
 }
@@ -40,7 +43,7 @@ Cell Cell::operator-(Player& player) {
 	Cell cell = *this;
 	cell.hero = nullptr;
 
-	return cell;;
+	return cell;
 }
 
 void Cell::operator +=(Player& player) {

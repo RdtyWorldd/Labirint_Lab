@@ -54,8 +54,10 @@ void Game::move(Action act) {
 		return;
 	} 
 	else {
-		*(maze[player.getY()][player.getX()].getCell()) -= player;
-		*(maze[y][x].getCell()) += player;
+		int ox = player.getX();
+		int oy = player.getY();
+		*(maze[oy][ox].getCell()) = *(maze[oy][ox].getCell()) - player;
+		*(maze[y][x].getCell()) = *(maze[y][x].getCell()) + player;
 		player.move(x, y);
 	}
 }
@@ -124,6 +126,7 @@ ostream& operator <<(ostream& out, const Game& game) {
 		}
 		out << endl;
 	}
+	out << "Treasures find: " << game.player.getTreasures();
 	return out;
 }
 

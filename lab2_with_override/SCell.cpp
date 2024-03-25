@@ -46,6 +46,9 @@ istream& operator >>(istream& in, SCell& scell) {
 	if (tmp == '#') {
 		scell.setCell(new Wall());
 	}
+	else if (tmp == '$') {
+		scell.setCell(new Treasure());
+	}
 
 	return in;
 }

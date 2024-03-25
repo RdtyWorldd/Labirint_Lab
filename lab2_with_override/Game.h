@@ -5,6 +5,7 @@
 
 #include "Cell.h"
 #include "Wall.h"
+#include "Treasure.h"
 #include "SCell.h"
 #include "Player.h"
 

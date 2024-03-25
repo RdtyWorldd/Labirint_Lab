@@ -56,8 +56,13 @@ void Game::move(Action act) {
 	else {
 		int ox = player.getX();
 		int oy = player.getY();
-		*(maze[oy][ox].getCell()) = *(maze[oy][ox].getCell()) - player;
-		*(maze[y][x].getCell()) = *(maze[y][x].getCell()) + player;
+//		*(maze[oy][ox].getCell()) = *(maze[oy][ox].getCell()) - player;
+//		*(maze[y][x].getCell()) = *(maze[y][x].getCell()) + player;
+		maze[oy][ox] -= player;
+		maze[y][x] += player;
+		
+//		maze[oy][ox].setCell(*(maze[oy][ox].getCell()) - player);
+//		maze[y][x].setCell( *(maze[y][x].getCell()) + player);
 		player.move(x, y);
 	}
 }
@@ -130,10 +135,10 @@ ostream& operator <<(ostream& out, const Game& game) {
 	return out;
 }
 
-ostream& operator <<(ostream& out, const Cell* cell) {
-	cell->visit(out);
-	return out;
-}
+//ostream& operator <<(ostream& out, const Cell* cell) {
+//	cell->visit(out);
+//	return out;
+//}
 
 //istream& operator >>(istream& in, SCell scell) {
 //	unsigned char tmp;

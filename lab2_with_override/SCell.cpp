@@ -13,6 +13,9 @@ SCell::~SCell() {
 	}
 }
 void SCell::setCell(Cell* _cell) {
+	if (this->cell == _cell)
+		return;
+
 	if (wachers == 1)
 		delete cell;
 
@@ -34,6 +37,14 @@ SCell& SCell::operator =(SCell& scell) {
 	cell = scell.cell;
 	wachers = scell.wachers++;
 	return *this;
+}
+
+void SCell::operator+= (Player& player) {
+	cell = *cell + player;
+}
+
+void SCell::operator-= (Player& player) {
+	cell = *cell - player;
 }
 
 Cell* SCell::operator->() {

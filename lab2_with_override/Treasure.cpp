@@ -2,16 +2,17 @@
 
 
 void Treasure::visit(ostream& out) const {
-	out << "$";
+	out << " ";
 }
 
 bool Treasure::hasAdd() {
 	return true;
 }
 
-Cell Treasure::operator+ (Player& hero) {
+Cell* Treasure::operator+ (Player& hero) {
 	hero.addTreasure();
-	Cell cell;
-	cell += hero;
+	Cell* cell = new Cell();
+	*cell += hero;
+
 	return cell;
 }

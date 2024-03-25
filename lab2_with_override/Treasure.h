@@ -6,5 +6,5 @@ class Treasure : public Cell {
 	virtual void visit(ostream& out) const;
 	virtual bool hasAdd();
 
-	virtual Cell operator +(Player& player);
+	virtual Cell* operator +(Player& player);
 };

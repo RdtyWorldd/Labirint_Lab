@@ -18,5 +18,8 @@ public:
 	SCell& operator =(SCell& scell);
 	Cell* operator ->();
 
+	void operator +=(Player& player);
+	void operator -=(Player& player);
+
 	friend istream& operator >>(istream& in, SCell& scell);
 };

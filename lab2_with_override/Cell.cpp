@@ -32,18 +32,18 @@ Cell& Cell::operator=(const Cell& _cell) {
 	return *this;
 }
 
-Cell Cell::operator+(Player & player) {
-	Cell cell = *this;
-	cell.hero = &player;
+Cell* Cell::operator+(Player & player) {
+	Cell* cell = new Cell(*this);
+	cell->hero = &player;
 
 	return cell;
 }
 
-Cell Cell::operator-(Player& player) {
-	Cell cell = *this;
-	cell.hero = nullptr;
+Cell* Cell::operator-(Player& player) {
+	Cell* cell = new Cell(*this);
+	cell->hero = nullptr;
 
-	return cell;
+	return cell;;
 }
 
 void Cell::operator +=(Player& player) {

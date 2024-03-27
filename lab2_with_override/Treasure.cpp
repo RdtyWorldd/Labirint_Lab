@@ -1,18 +1,22 @@
 #include "Treasure.h"
 
-
-void Treasure::visit(ostream& out) const {
-	out << " ";
-}
-
 bool Treasure::hasAdd() {
 	return true;
 }
 
-Cell* Treasure::operator+ (Player& hero) {
-	hero.addTreasure();
-	Cell* cell = new Cell();
-	*cell += hero;
+Cell* Treasure::copy() {
+	return new Treasure();
+}
 
-	return cell;
+Cell* Treasure::operator +(Player& player) {
+	player.addTreasure();
+	return new PlayerCell();
+}
+
+Cell* Treasure::operator -(Player& player) {
+	return this;
+}
+
+void Treasure::visit(ostream& out) const {
+	out << "$";
 }

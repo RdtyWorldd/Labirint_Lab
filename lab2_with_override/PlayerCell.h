@@ -1,8 +1,9 @@
 #pragma once
 
 #include "Cell.h"
+#include "ClearCell.h"
 
-class Wall : public Cell {
+class PlayerCell : public Cell {
 public:
 	virtual bool hasAdd();
 	virtual Cell* copy();

@@ -127,19 +127,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="ClearCell.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="SCell.cpp" />
+    <ClCompile Include="PlayerCell.cpp" />
     <ClCompile Include="Treasure.cpp" />
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="ClearCell.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="SCell.h" />
+    <ClInclude Include="PlayerCell.h" />
     <ClInclude Include="Treasure.h" />
     <ClInclude Include="Wall.h" />
   </ItemGroup>

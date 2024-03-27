@@ -4,9 +4,11 @@
 #include <fstream>
 
 #include "Cell.h"
+#include "ClearCell.h"
+#include "PlayerCell.h"
 #include "Wall.h"
 #include "Treasure.h"
-#include "SCell.h"
+
 #include "Player.h"
 
 enum Action {
@@ -19,8 +21,8 @@ enum Action {
 class Game {
 	int high, wide;
 	Player& player;
-	SCell** maze;
-	//Cell** * maze;
+	//SCell** maze;
+	Cell** * maze;
 public:
 	Game(Player& player);
 	//void addPlayer(Player& player);
@@ -37,5 +39,5 @@ public:
 	~Game();
 };
 
-ostream& operator <<(ostream& out, const Cell* cell);
-//istream& operator >>(istream& in, Cell** cell);
+//ostream& operator <<(ostream& out, const Cell* cell);
+istream& operator >>(istream& in, Cell** cell);

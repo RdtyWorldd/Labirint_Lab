@@ -5,32 +5,14 @@
 using namespace std;
 
 class Cell {
-protected:
-	Player* hero;
 public:
-	Cell();
-	Cell(const Cell& _cell);
-	virtual ~Cell();
+	virtual bool hasAdd() =0;
 
-	Player& getHero();
-	void setHero(Player* _hero);
-	virtual bool hasAdd();
+	virtual Cell* copy() =0;
 
-	virtual Cell& operator =(const Cell& _cell);
-	//невозможно изменить клетку если присваивать по объекту который хранит указатель, тк 
-	//измен€етс€ объект а не ссылка, и сокровище остаетс€ сокровищем
-//	virtual Cell operator +(Player& player);
-//	virtual Cell operator -(Player& player);
+	virtual Cell* operator +(Player& player) =0;
+	virtual Cell* operator -(Player& player) =0;
 
-	//те же операторы, но возвращают ссылки
-	virtual Cell* operator +(Player& player);
-	virtual Cell* operator -(Player& player);
-
-	void operator +=(Player& player);
-	void operator -=(Player& player);
-
-	virtual void visit(ostream& out) const;
-	//friend ostream & operator << (ostream & out, const Cell & cell);
-	//friend istream& operator >> (istream& in, Cell& cell);
+	virtual void visit(ostream& out) const =0;
 };
 

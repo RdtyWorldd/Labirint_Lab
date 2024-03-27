@@ -11,17 +11,11 @@ Game::Game(const Game& _game): player(_game.player) {
 		return;
 	}
 
-	maze = new SCell * [high];
+	maze = new Cell** [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = new SCell[wide];
+		maze[i] = new Cell*[wide];
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j].setCell(new Cell());
-		}
-	}
-
-	for (size_t i = 0; i < high; i++) {
-		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j];
+			maze[i][j] = _game.maze[i][j]->copy();
 		}
 	}
 }
@@ -56,13 +50,9 @@ void Game::move(Action act) {
 	else {
 		int ox = player.getX();
 		int oy = player.getY();
-//		*(maze[oy][ox].getCell()) = *(maze[oy][ox].getCell()) - player;
-//		*(maze[y][x].getCell()) = *(maze[y][x].getCell()) + player;
-		maze[oy][ox] -= player;
-		maze[y][x] += player;
-		
-//		maze[oy][ox].setCell(*(maze[oy][ox].getCell()) - player);
-//		maze[y][x].setCell( *(maze[y][x].getCell()) + player);
+		maze[oy][ox] = *(maze[oy][ox]) - player;
+		maze[y][x] = *(maze[y][x]) + player;
+
 		player.move(x, y);
 	}
 }
@@ -81,19 +71,14 @@ Game& Game::operator= (const Game& _game) {
 		return *this;
 	}
 
-	maze = new SCell * [high];
+	maze = new Cell** [high];
 	for (size_t i = 0; i < high; i++) {
-		maze[i] = new SCell[wide];
+		maze[i] = new Cell* [wide];
 		for (size_t j = 0; j < wide; j++) {
-			maze[i][j].setCell(new Cell());
+			maze[i][j] = _game.maze[i][j]->copy();
 		}
 	}
 
-	for (size_t i = 0; i < high; i++) {
-		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j];
-		}
-	}
 	return *this;
 }
 
@@ -103,24 +88,21 @@ istream& operator >>(istream& in, Game& game) {
 	if (game.maze != nullptr)
 		delete[] game.maze;
 
-	game.maze = new SCell * [high];
+	game.maze = new Cell ** [high];
 	for (size_t i = 0; i < high; i++) {
-		game.maze[i] = new SCell[wide];
-		for (size_t j = 0; j < wide; j++) {
-			game.maze[i][j].setCell(new Cell());
-		}
+		game.maze[i] = new Cell*[wide];
 	}
 
 	for (size_t i = 0; i < high; i++) {
 		for (size_t j = 0; j < wide; j++) {
-			in >> game.maze[i][j];
+			in >> &(game.maze[i][j]);
 		}
 	}
 
 	game.high = high;
 	game.wide = wide;
 	//game.maze = maze;
-	*(game.maze[game.player.getY()][game.player.getX()].getCell()) += game.player;
+	game.maze[game.player.getY()][game.player.getX()] = new PlayerCell();
 	return in;
 }
 
@@ -134,19 +116,29 @@ ostream& operator <<(ostream& out, const Game& game) {
 	out << "Treasures find: " << game.player.getTreasures();
 	return out;
 }
-
+//
 //ostream& operator <<(ostream& out, const Cell* cell) {
 //	cell->visit(out);
 //	return out;
 //}
 
-//istream& operator >>(istream& in, SCell scell) {
-//	unsigned char tmp;
-//	in >> tmp;
-//	if (tmp == '#') {
-//		delete *cell;
-//		*cell = new Wall();
-//	}
-//
-//	return in;
-//}
+istream& operator >>(istream& in, Cell** cell) {
+	unsigned char tmp;
+	in >> tmp;
+	switch (tmp)
+	{
+	case '_':
+		*cell = new ClearCell();
+		break;
+	case '#':
+		*cell = new Wall();
+		break;
+	case '$':
+		*cell = new Treasure();
+		break;
+	default:
+		break;
+	}
+
+	return in;
+}

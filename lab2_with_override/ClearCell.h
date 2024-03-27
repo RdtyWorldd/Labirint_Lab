@@ -1,12 +1,12 @@
 #pragma once
-
 #include "Cell.h"
+#include "PlayerCell.h"
 
-class Wall : public Cell {
+class ClearCell : public Cell {
 public:
 	virtual bool hasAdd();
 	virtual Cell* copy();
-
+	
 	virtual Cell* operator +(Player& player);
 	virtual Cell* operator -(Player& player);
 

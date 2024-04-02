@@ -1,2 +1,3 @@
 ﻿  Game.cpp
+E:\пары\основы программирования\семестр 2\lab2_with_override\lab2_with_override\Game.cpp(65,14): warning C4101: exception: неиспользованная локальная переменная
   lab2_with_override.vcxproj -> E:\пары\основы программирования\семестр 2\lab2_with_override\x64\Debug\lab2_with_override.exe

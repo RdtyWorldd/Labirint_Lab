@@ -44,16 +44,27 @@ void Game::move(Action act) {
 		break;
 	}
 
-	if ((x < 0) || (y < 0) ||(x >= wide) || (y >= high) || !maze[y][x]->hasAdd()) {
+	if ((x < 0) || (y < 0) ||(x >= wide) || (y >= high) ) {
 		return;
 	} 
 	else {
-		int ox = player.getX();
-		int oy = player.getY();
-		maze[oy][ox] = *(maze[oy][ox]) - player;
-		maze[y][x] = *(maze[y][x]) + player;
+		try {
+			int ox = player.getX();
+			int oy = player.getY();
+			Cell* t = maze[y][x];
 
-		player.move(x, y);
+			maze[y][x] = *(maze[y][x]) + player;
+			delete t;
+
+			t = maze[oy][ox];
+			maze[oy][ox] = *(maze[oy][ox]) - player;
+			delete t;
+
+			player.move(x, y);
+		}
+		catch (int exception) {
+
+		}
 	}
 }
 
@@ -63,6 +74,12 @@ Game& Game::operator= (const Game& _game) {
 	wide = _game.wide;
 
 	if (maze != nullptr) {
+		for (int i = 0; i < high; i++) {
+			for (int j = 0; j < wide; j++) {
+				delete maze[i][j];
+			}
+			delete maze[i];
+		}
 		delete[] maze;
 	}
 
@@ -116,6 +133,7 @@ ostream& operator <<(ostream& out, const Game& game) {
 	out << "Treasures find: " << game.player.getTreasures();
 	return out;
 }
+
 //
 //ostream& operator <<(ostream& out, const Cell* cell) {
 //	cell->visit(out);
@@ -123,6 +141,11 @@ ostream& operator <<(ostream& out, const Game& game) {
 //}
 
 istream& operator >>(istream& in, Cell** cell) {
+	//int* exits = nullptr;
+	//int n;
+	//in >> n;
+	//exits = new int[n];
+
 	unsigned char tmp;
 	in >> tmp;
 	switch (tmp)
@@ -135,6 +158,9 @@ istream& operator >>(istream& in, Cell** cell) {
 		break;
 	case '$':
 		*cell = new Treasure();
+		break;
+	case '/':
+		//*cell = new Exit();
 		break;
 	default:
 		break;

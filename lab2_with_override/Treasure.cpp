@@ -1,8 +1,8 @@
 #include "Treasure.h"
 
-bool Treasure::hasAdd() {
-	return true;
-}
+//bool Treasure::hasAdd() {
+//	return true;
+//}
 
 Cell* Treasure::copy() {
 	return new Treasure();
@@ -14,7 +14,8 @@ Cell* Treasure::operator +(Player& player) {
 }
 
 Cell* Treasure::operator -(Player& player) {
-	return this;
+	throw -1;
+	return new Treasure();
 }
 
 void Treasure::visit(ostream& out) const {

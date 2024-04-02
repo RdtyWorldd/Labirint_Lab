@@ -1,8 +1,8 @@
 #include "ClearCell.h"
 
-bool ClearCell::hasAdd() {
-	return true;
-}
+//bool ClearCell::hasAdd() {
+//	return true;
+//}
 
 Cell* ClearCell::copy() {
 	return new ClearCell();
@@ -13,7 +13,8 @@ Cell* ClearCell::operator +(Player& player) {
 }
 
 Cell* ClearCell::operator -(Player& player) {
-	return this;
+	throw -1;
+	return new ClearCell();
 }
 
 void ClearCell::visit(ostream& out) const {

@@ -128,6 +128,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClearCell.cpp" />
+    <ClCompile Include="Exit.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="Cell.h" />
     <ClInclude Include="ClearCell.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Exit.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCell.h" />
     <ClInclude Include="Treasure.h" />

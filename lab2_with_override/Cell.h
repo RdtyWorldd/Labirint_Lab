@@ -6,7 +6,7 @@ using namespace std;
 
 class Cell {
 public:
-	virtual bool hasAdd() =0;
+	//virtual bool hasAdd() =0;
 
 	virtual Cell* copy() =0;
 

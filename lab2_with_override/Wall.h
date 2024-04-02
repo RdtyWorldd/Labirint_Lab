@@ -4,7 +4,7 @@
 
 class Wall : public Cell {
 public:
-	virtual bool hasAdd();
+	//virtual bool hasAdd();
 	virtual Cell* copy();
 
 	virtual Cell* operator +(Player& player);

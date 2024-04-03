@@ -23,6 +23,10 @@ ExitsVector& Singltone::getVector() {
 	return *vector;
 }
 
+void Singltone::resetCount() {
+	exitCounter = 0;
+}
+
 int Singltone::getNext() {
 	if (exitCounter >= vector->getSize())
 		throw - 5;

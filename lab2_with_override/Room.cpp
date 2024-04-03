@@ -1,6 +1,57 @@
 #include "Room.h"
 
 Room::Room(): high(0), wide(0), cells(nullptr) {}
+
+Room::Room(const Room& room) {
+	high = room.high;
+	wide = room.wide;
+	if (room.cells == nullptr) {
+		cells = nullptr;
+		return;
+	}
+
+	cells = new Cell **[high];
+	for (size_t i = 0; i < high; i++) {
+		cells[i] = new Cell * [wide];
+		for (size_t j = 0; j < wide; j++) {
+			cells[i][j] = room.cells[i][j]->copy();
+		}
+	}
+}
+
+Room& Room::operator =(const Room& room) {
+	if (this == &room)
+		return *this;
+
+	high = room.high;
+	wide = room.wide;
+
+	if (cells != nullptr) {
+		for (int i = 0; i < high; i++) {
+			for (int j = 0; j < wide; j++) {
+				delete cells[i][j];
+			}
+			delete cells[i];
+		}
+		delete[] cells;
+	}
+
+	if (room.cells == nullptr) {
+		cells = nullptr;
+		return *this;
+	}
+
+	cells = new Cell * *[high];
+	for (size_t i = 0; i < high; i++) {
+		cells[i] = new Cell * [wide];
+		for (size_t j = 0; j < wide; j++) {
+			cells[i][j] = room.cells[i][j]->copy();
+		}
+	}
+
+	return *this;
+}
+
 Room::~Room() {
 	if (cells != nullptr) {
 		for (int i = 0; i < high; i++) {
@@ -15,6 +66,7 @@ Room::~Room() {
 
 int Room::getHigh() { return high; }
 int Room::getWide() { return wide; }
+Cell*** Room::getCells(){ return cells; }
 
 ostream& operator <<(ostream& out, const Room& room) {
 	for (int i = 0; i < room.high; i++) {
@@ -47,8 +99,7 @@ istream& operator >>(istream& in, Room& room) {
 			in >> room.cells[i][j];
 		}
 	}
-
-	//delete Singltone::getInstance();
+	Singltone::getInstance()->resetCount();
 	return in;
 }
 
@@ -75,4 +126,9 @@ istream& operator >>(istream& in, Cell*& cell) {
 	}
 
 	return in;
+}
+
+ostream& operator <<(ostream& out, const Cell*& cell) {
+	cell -> visit(out);
+	return out;
 }

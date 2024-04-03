@@ -1,27 +1,23 @@
 #include "Game.h"
 
-Game::Game(Player& _player) : maze(nullptr), player(_player), high(0), wide(0) {}
+Game::Game(Player& _player) : roomsCount(0), roomNow(-1), rooms(nullptr), player(_player) {}
 
 Game::Game(const Game& _game): player(_game.player) {
-	high = _game.high;
-	wide = _game.wide;
-	if (_game.maze == nullptr)
-	{
-		maze = nullptr;
+	roomNow = _game.roomNow;
+	roomsCount = _game.roomsCount;
+	if (_game.rooms == nullptr) {
+		rooms = nullptr;
 		return;
 	}
 
-	maze = new Cell** [high];
-	for (size_t i = 0; i < high; i++) {
-		maze[i] = new Cell*[wide];
-		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j]->copy();
-		}
+	rooms = new Room[roomsCount];
+	for (size_t i = 0; i < roomsCount; i++) {
+		rooms[i] = _game.rooms[i];
 	}
 }
 
 Game::~Game() {
-	delete[] maze;
+	delete[] rooms;
 }
 
 void Game::move(Action act) {
@@ -44,127 +40,109 @@ void Game::move(Action act) {
 		break;
 	}
 
-	if ((x < 0) || (y < 0) ||(x >= wide) || (y >= high) ) {
+	if ((x < 0) || (y < 0) ||(x >= rooms[roomNow].getWide()) || (y >= rooms[roomNow].getHigh())) {
 		return;
 	} 
 	else {
 		try {
+			Cell*** cells = rooms[roomNow].getCells();
 			int ox = player.getX();
 			int oy = player.getY();
-			Cell* t = maze[y][x];
+			Cell* t = cells[y][x];
 
-			maze[y][x] = *(maze[y][x]) + player;
+			cells[y][x] = *t + player;
 			delete t;
 
-			t = maze[oy][ox];
-			maze[oy][ox] = *(maze[oy][ox]) - player;
+			t = cells[oy][ox];
+			cells[oy][ox] = *t - player;
 			delete t;
 
 			player.move(x, y);
 		}
 		catch (int exception) {
-
+			if (exception >= 0) {
+				int c = exception;
+				changeRoom(c);
+			}
 		}
 	}
 }
 
+void Game::changeRoom(int roomId) {
+	int ox = player.getX();
+	int oy = player.getY();
+
+	Cell*** cells = rooms[roomNow].getCells();
+	delete cells[oy][ox];
+	cells[oy][ox] = new ClearCell();
+	
+
+	roomNow = roomId;
+	int x = (rooms[roomNow].getWide() - 1) / 2;
+	int y = (rooms[roomNow].getHigh() - 1) / 2;
+
+	cells = rooms[roomNow].getCells();
+	delete cells[y][x];
+	cells[y][x] = new PlayerCell();
+	
+
+	player.move(x, y);
+}
+
 Game& Game::operator= (const Game& _game) {
-	player = _game.player;
-	high = _game.high;
-	wide = _game.wide;
-
-	if (maze != nullptr) {
-		for (int i = 0; i < high; i++) {
-			for (int j = 0; j < wide; j++) {
-				delete maze[i][j];
-			}
-			delete maze[i];
-		}
-		delete[] maze;
-	}
-
-	if (_game.maze == nullptr) {
-		maze = nullptr;
+	if (this == &_game) {
 		return *this;
 	}
 
-	maze = new Cell** [high];
-	for (size_t i = 0; i < high; i++) {
-		maze[i] = new Cell* [wide];
-		for (size_t j = 0; j < wide; j++) {
-			maze[i][j] = _game.maze[i][j]->copy();
-		}
+	player = _game.player;
+	roomsCount = _game.roomsCount;
+	roomNow = _game.roomNow;
+
+	if (rooms != nullptr) {
+		delete[] rooms;
+	}
+
+	if (_game.rooms == nullptr) {
+		rooms = nullptr;
+		return *this;
+	}
+
+	rooms = new Room[roomsCount];
+	for (size_t i = 0; i < roomsCount; i++) {
+		rooms[i] = _game.rooms[i];
 	}
 
 	return *this;
 }
 
 istream& operator >>(istream& in, Game& game) {
-	int high, wide;
-	in >> high >> wide;
-	if (game.maze != nullptr)
-		delete[] game.maze;
+	int roomsCount, roomNow;
+	in >> roomsCount >> roomNow;
+	
+	game.roomsCount = roomsCount;
+	game.roomNow = roomNow;
 
-	game.maze = new Cell ** [high];
-	for (size_t i = 0; i < high; i++) {
-		game.maze[i] = new Cell*[wide];
+	if (game.rooms != nullptr)
+		delete[] game.rooms;
+
+	if (roomsCount <= 0 || roomNow < 0) {
+		throw - 10000; // € об€щательно напишу классы исключений, честно
 	}
 
-	for (size_t i = 0; i < high; i++) {
-		for (size_t j = 0; j < wide; j++) {
-			in >> &(game.maze[i][j]);
-		}
+	game.rooms = new Room[roomsCount];
+	for (size_t i = 0; i < roomsCount; i++) {
+		in >> game.rooms[i];
 	}
 
-	game.high = high;
-	game.wide = wide;
-	//game.maze = maze;
-	game.maze[game.player.getY()][game.player.getX()] = new PlayerCell();
+	game.rooms[game.roomNow].getCells()[game.player.getY()][game.player.getX()] = new PlayerCell();
 	return in;
 }
 
 ostream& operator <<(ostream& out, const Game& game) {
-	for (size_t i = 0; i < game.high; i++) {
-		for (size_t j = 0; j < game.wide; j++) {
-			game.maze[i][j]->visit(out);
-		}
-		out << endl;
-	}
+	out << game.rooms[game.roomNow];
 	out << "Treasures find: " << game.player.getTreasures();
 	return out;
 }
 
 //
-//ostream& operator <<(ostream& out, const Cell* cell) {
-//	cell->visit(out);
-//	return out;
-//}
 
-istream& operator >>(istream& in, Cell** cell) {
-	//int* exits = nullptr;
-	//int n;
-	//in >> n;
-	//exits = new int[n];
-
-	unsigned char tmp;
-	in >> tmp;
-	switch (tmp)
-	{
-	case '_':
-		*cell = new ClearCell();
-		break;
-	case '#':
-		*cell = new Wall();
-		break;
-	case '$':
-		*cell = new Treasure();
-		break;
-	case '/':
-		//*cell = new Exit();
-		break;
-	default:
-		break;
-	}
-
-	return in;
-}

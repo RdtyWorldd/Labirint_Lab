@@ -12,6 +12,7 @@ class Singltone {
 public:
 	static Singltone* getInstance();
 	ExitsVector& getVector();
+	void resetCount();
 	int getNext();
 
 	~Singltone();

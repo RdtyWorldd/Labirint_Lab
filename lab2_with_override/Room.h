@@ -13,13 +13,17 @@ class Room {
 	Cell*** cells;
 public:
 	Room();
+	Room(const Room& room);
+	Room& operator =(const Room& room);
 	~Room();
 
 	int getWide();
 	int getHigh();
-	
+	Cell*** getCells();
+
 	friend ostream& operator <<(ostream& out, const Room& room);
 	friend istream& operator >>(istream& in, Room& room);
 };
 
+ostream& operator <<(ostream& out, const Cell*& room);
 istream& operator >>(istream& in, Cell*& cell);

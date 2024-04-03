@@ -46,21 +46,22 @@ int main() {
 	//cout << *cell;
 	//return 0;
 	{
-		ifstream file("maze.txt");
+		ifstream file("maze3.txt");
 		file >> game1;
 	}
 
-	{
-		ifstream file("maze1.txt");
-		Room room;
-		file >> room;
-		cout << room;
-	}
+	//{
+	//	ifstream file("maze1.txt");
+	//	Room room;
+	//	file >> room;
+	//	cout << room;
+	//}
 	//game1.loadMaze("maze.txt");
 	//game = game1;
-	//cout << game1;
-
-	//run(game1);
+	cout << game1;
+	
+	run(game1);
+	delete Singltone::getInstance();
 //	Game game(player);
 //	game = game1;
 }

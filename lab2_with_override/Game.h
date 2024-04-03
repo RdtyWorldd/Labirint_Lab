@@ -3,12 +3,7 @@
 #include <iostream>
 #include <fstream>
 
-#include "Cell.h"
-#include "ClearCell.h"
-#include "PlayerCell.h"
-#include "Wall.h"
-#include "Treasure.h"
-
+#include "Room.h"
 #include "Player.h"
 
 enum Action {
@@ -19,25 +14,21 @@ enum Action {
 };
 
 class Game {
-	int high, wide;
+	int roomsCount;
+	int roomNow;
 	Player& player;
-	//SCell** maze;
-	Cell** * maze;
+	Room* rooms;
 public:
 	Game(Player& player);
 	//void addPlayer(Player& player);
 	Game(const Game& _game);
-	int getHigh() const;
-	int getWide() const;
+
 	//void loadMaze(string file);
 	void move(Action act);
-	
+	void changeRoom(int roomId);
 	Game& operator = (const Game& game);
 	friend ostream& operator <<(ostream& out, const Game& game);
 	friend istream& operator >> (istream& in, Game& game);
 
 	~Game();
 };
-
-//ostream& operator <<(ostream& out, const Cell* cell);
-istream& operator >>(istream& in, Cell** cell);

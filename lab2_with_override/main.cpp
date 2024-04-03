@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Room.h"
 #include <conio.h>
 #include <windows.h>
 
@@ -49,12 +50,17 @@ int main() {
 		file >> game1;
 	}
 
-
+	{
+		ifstream file("maze1.txt");
+		Room room;
+		file >> room;
+		cout << room;
+	}
 	//game1.loadMaze("maze.txt");
 	//game = game1;
-	cout << game1;
+	//cout << game1;
 
-	run(game1);
+	//run(game1);
 //	Game game(player);
 //	game = game1;
 }

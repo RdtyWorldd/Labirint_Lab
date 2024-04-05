@@ -127,8 +127,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AddCellException.cpp" />
     <ClCompile Include="ClearCell.cpp" />
     <ClCompile Include="Exit.cpp" />
+    <ClCompile Include="ExitException.cpp" />
     <ClCompile Include="ExitsVector.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
@@ -140,8 +142,10 @@
     <ClCompile Include="Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddCellException.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="ClearCell.h" />
+    <ClInclude Include="ExitException.h" />
     <ClInclude Include="ExitsVector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Exit.h" />

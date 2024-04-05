@@ -46,8 +46,14 @@ int main() {
 	//cout << *cell;
 	//return 0;
 	{
-		ifstream file("maze3.txt");
-		file >> game1;
+		try {
+			ifstream file("maze3.txt");
+			file >> game1;
+			delete Singltone::getInstance();
+		} catch (exception e) {
+			cout << e.what();
+			exit(-1);
+		}
 	}
 
 	//{
@@ -61,7 +67,7 @@ int main() {
 	cout << game1;
 	
 	run(game1);
-	delete Singltone::getInstance();
+	
 //	Game game(player);
 //	game = game1;
 }

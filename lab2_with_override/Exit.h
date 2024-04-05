@@ -2,6 +2,7 @@
 
 #include "Cell.h"
 #include "Singltone.h"
+#include "ExitException.h"
 
 class Exit : public Cell {
 	int nextRoom;

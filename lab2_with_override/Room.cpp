@@ -83,8 +83,8 @@ istream& operator >>(istream& in, Room& room) {
 	int wide = 0;
 
 	in >> high >> wide;
-	if (high <= 0 || wide <= 0) {
-		throw - 100;
+	if (high < 3 || wide < 3) {
+		throw invalid_argument("room can't be less than: high = 3, wide = 3");
 		return in;
 	}
 	room.high = high;

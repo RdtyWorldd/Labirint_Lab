@@ -14,7 +14,7 @@ Cell* Treasure::operator +(Player& player) {
 }
 
 Cell* Treasure::operator -(Player& player) {
-	throw -1;
+	throw AddCellException();
 	return new Treasure();
 }
 

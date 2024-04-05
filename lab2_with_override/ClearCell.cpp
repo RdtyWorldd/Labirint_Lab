@@ -13,7 +13,7 @@ Cell* ClearCell::operator +(Player& player) {
 }
 
 Cell* ClearCell::operator -(Player& player) {
-	throw -1;
+	throw AddCellException();
 	return new ClearCell();
 }
 

@@ -29,7 +29,7 @@ void Singltone::resetCount() {
 
 int Singltone::getNext() {
 	if (exitCounter >= vector->getSize())
-		throw - 5;
+		throw length_error("exitCouter is out of range vector's size");
 	return (*vector)[exitCounter++];
 }
 

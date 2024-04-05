@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Player.h"
+#include "AddCellException.h"
 
 using namespace std;
 

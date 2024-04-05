@@ -59,11 +59,11 @@ void Game::move(Action act) {
 
 			player.move(x, y);
 		}
-		catch (int exception) {
-			if (exception >= 0) {
-				int c = exception;
-				changeRoom(c);
-			}
+		catch (ExitException e) {
+			changeRoom(e.getNextRoom());
+		}
+		catch (AddCellException e) {
+			//cout <<e.what();
 		}
 	}
 }

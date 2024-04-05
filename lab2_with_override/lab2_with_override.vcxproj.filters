@@ -22,6 +22,12 @@
     <Filter Include="Файлы заголовков\Exceptions">
       <UniqueIdentifier>{f1ef63a7-cf00-4ebf-a272-b8220ea8a635}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Exceptions">
+      <UniqueIdentifier>{ab0eb276-5582-4313-92d6-a1095e6e887f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entity">
+      <UniqueIdentifier>{3685fbe3-d8fe-4839-b914-fc80b3e6b53f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -57,12 +63,15 @@
     <ClCompile Include="ExitsVector.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="ExitException.cpp">
+      <Filter>Исходные файлы\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="AddCellException.cpp">
+      <Filter>Исходные файлы\Exceptions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Room.h">
@@ -91,6 +100,15 @@
     </ClInclude>
     <ClInclude Include="ExitsVector.h">
       <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ExitException.h">
+      <Filter>Файлы заголовков\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="AddCellException.h">
+      <Filter>Файлы заголовков\Exceptions</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Файлы заголовков\Entity</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

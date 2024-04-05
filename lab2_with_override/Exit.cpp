@@ -12,12 +12,12 @@ Cell* Exit::operator +(Player& player) {
 	if (nextRoom == -1) {
 		throw - 2;// код ошибки для завершения игры, так как других комнат нет, нашелся выход
 	}
-	throw nextRoom; // код исключения для того чтобы загрузить другую комнату
+	throw ExitException(nextRoom); // код исключения для того чтобы загрузить другую комнату
 	return new Exit(nextRoom);
 }
 
 Cell* Exit::operator -(Player& player) {
-	throw - 1;
+	throw AddCellException();
 	return new Exit(nextRoom);
 }
 

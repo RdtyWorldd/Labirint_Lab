@@ -18,7 +18,7 @@ istream& operator >>(istream& in, ExitsVector& vector) {
 	int n;
 	in >> n;
 	if (n < 0)
-		throw - 5;
+		throw std::invalid_argument("vector can't have size <= 0 ");
 
 	if (vector.a != nullptr)
 		delete[] vector.a;

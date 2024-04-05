@@ -9,7 +9,7 @@ Cell* PlayerCell::copy() {
 }
 //возможно перейти на исключения, чтобы определенные клетки нельзя было складывать или вычитать
 Cell* PlayerCell::operator +(Player& Player) {
-	throw -1;
+	throw AddCellException();
 	return new PlayerCell();
 }
 

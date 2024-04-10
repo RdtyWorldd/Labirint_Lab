@@ -10,5 +10,8 @@ public:
 	virtual Cell* operator +(Player& player);
 	virtual Cell* operator -(Player& player);
 
+	virtual Cell* operator +(Monster& player);
+	virtual Cell* operator -(Monster& player);
+
 	virtual void visit(ostream& out) const;
 };

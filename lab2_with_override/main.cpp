@@ -65,9 +65,9 @@ int main() {
 	//game1.loadMaze("maze.txt");
 	//game = game1;
 	cout << game1;
-	
-	run(game1);
-	
+	try {
+		run(game1);
+	} 
 //	Game game(player);
 //	game = game1;
 }

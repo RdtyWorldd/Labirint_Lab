@@ -1,17 +1,10 @@
 #pragma once
+#include "Entity.h"
 
-
-class Player {
-	int x;
-	int y;
+class Player : public Entity {
 	int treasures;
 public:
-	Player(int _x=0, int _y=0);
-
-	int getX();
-	int getY();
+	Player(int _x = 1, int _y = 1, int _hp = 1);
 	int getTreasures();
-
 	void addTreasure();
-	void move(int _x, int _y);
 };

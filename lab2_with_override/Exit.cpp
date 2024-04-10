@@ -21,6 +21,15 @@ Cell* Exit::operator -(Player& player) {
 	return new Exit(nextRoom);
 }
 
+Cell* Exit::operator+(Monster& monster) {
+	return new Exit(nextRoom);
+}
+
+Cell* Exit::operator-(Monster& monster) {
+	throw AddCellException();
+	return new Exit(nextRoom);
+}
+
 void Exit::visit(ostream& out) const {
 	out << "/";
 }

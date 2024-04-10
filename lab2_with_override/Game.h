@@ -6,17 +6,14 @@
 #include "Room.h"
 #include "Player.h"
 
-enum Action {
-	UP,
-	DOWN,
-	LEFT,
-	RIGHT
-};
+#include "Monster.h"
+#include "Xmonster.h"
 
 class Game {
 	int roomsCount;
 	int roomNow;
 	Player& player;
+	Monster* monster;
 	Room* rooms;
 public:
 	Game(Player& player);

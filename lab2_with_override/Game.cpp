@@ -1,8 +1,11 @@
 #include "Game.h"
 
-Game::Game(Player& _player) : roomsCount(0), roomNow(-1), rooms(nullptr), player(_player) {}
+Game::Game(Player& _player) : roomsCount(0), roomNow(-1), rooms(nullptr), player(_player) {
+	monster = new Xmonster();
+	monster->move(2, 2);
+}
 
-Game::Game(const Game& _game): player(_game.player) {
+Game::Game(const Game& _game): player(_game.player), monster(_game.monster) {
 	roomNow = _game.roomNow;
 	roomsCount = _game.roomsCount;
 	if (_game.rooms == nullptr) {
@@ -46,6 +49,14 @@ void Game::move(Action act) {
 	else {
 		try {
 			Cell*** cells = rooms[roomNow].getCells();
+			
+			int ox = monster->getX();
+			int oy = monster->getY();
+
+			Cell* t = cells[oy][ox];
+			cells[oy][ox] = (*t) - (*monster);
+			delete t;
+
 			int ox = player.getX();
 			int oy = player.getY();
 			Cell* t = cells[y][x];
@@ -58,6 +69,11 @@ void Game::move(Action act) {
 			delete t;
 
 			player.move(x, y);
+
+			monster->move();
+			t = cells[monster->getY()][monster->getX()];
+			cells[monster->getY()][monster->getX()] = (*t) + (*monster);
+			delete t;
 		}
 		catch (ExitException e) {
 			changeRoom(e.getNextRoom());
@@ -135,6 +151,7 @@ istream& operator >>(istream& in, Game& game) {
 	}
 
 	game.rooms[game.roomNow].getCells()[game.player.getY()][game.player.getX()] = new PlayerCell();
+	game.rooms[game.roomNow].getCells()[game.monster->getY()][game.monster->getX()] = new MonsterCell();
 	return in;
 }
 

@@ -6,11 +6,15 @@
 #include "Treasure.h"
 #include "Exit.h"
 
+#include "Monster.h"
+#include "MonsterCell.h"
+
 #include "Singltone.h"
 
 class Room {
 	int high, wide;
 	Cell*** cells;
+	Monster* monsters; //не реализованно, надо бы перейти к вектору
 public:
 	Room();
 	Room(const Room& room);

@@ -17,6 +17,16 @@ Cell* Wall::operator -(Player& player) {
 	return new Wall();
 }
 
+Cell* Wall::operator +(Monster& monster) {
+	throw AddCellException();
+	return new Wall();
+}
+
+Cell* Wall::operator -(Monster& monster) {
+	throw AddCellException();
+	return new Wall();
+}
+
 void Wall::visit(ostream& out) const{
 	out << "#";
 }

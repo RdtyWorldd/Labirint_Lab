@@ -129,26 +129,34 @@
   <ItemGroup>
     <ClCompile Include="AddCellException.cpp" />
     <ClCompile Include="ClearCell.cpp" />
+    <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Exit.cpp" />
     <ClCompile Include="ExitException.cpp" />
     <ClCompile Include="ExitsVector.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameOverException.h" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MonsterCell.cpp" />
+    <ClCompile Include="Xmonster.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCell.cpp" />
     <ClCompile Include="Room.cpp" />
     <ClCompile Include="Singltone.cpp" />
     <ClCompile Include="Treasure.cpp" />
     <ClCompile Include="Wall.cpp" />
+    <ClCompile Include="Xmonster.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AddCellException.h" />
     <ClInclude Include="Cell.h" />
     <ClInclude Include="ClearCell.h" />
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="ExitException.h" />
     <ClInclude Include="ExitsVector.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Exit.h" />
+    <ClInclude Include="Monster.h" />
+    <ClInclude Include="MonsterCell.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCell.h" />
     <ClInclude Include="Room.h" />

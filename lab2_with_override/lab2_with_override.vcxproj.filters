@@ -28,15 +28,21 @@
     <Filter Include="Файлы заголовков\Entity">
       <UniqueIdentifier>{3685fbe3-d8fe-4839-b914-fc80b3e6b53f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Исходные файлы\Entity">
+      <UniqueIdentifier>{454c0846-26b6-4f78-95e6-06c9d12218d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\Entity\Monsters">
+      <UniqueIdentifier>{4c507780-9cee-4a94-bed4-257c09b05563}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entity\Monsters">
+      <UniqueIdentifier>{70137949-54ae-4479-b446-cad9410f8984}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Game.cpp">
-      <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
     <ClCompile Include="Room.cpp">
@@ -68,6 +74,24 @@
     </ClCompile>
     <ClCompile Include="AddCellException.cpp">
       <Filter>Исходные файлы\Exceptions</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Исходные файлы\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Исходные файлы\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="Xmonster.cpp">
+      <Filter>Исходные файлы\Entity\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="Xmonster.h">
+      <Filter>Файлы заголовков\Entity\Monsters</Filter>
+    </ClCompile>
+    <ClCompile Include="MonsterCell.cpp">
+      <Filter>Исходные файлы\Cells</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverException.h">
+      <Filter>Файлы заголовков\Exceptions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +133,15 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Файлы заголовков\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Файлы заголовков\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="Monster.h">
+      <Filter>Файлы заголовков\Entity\Monsters</Filter>
+    </ClInclude>
+    <ClInclude Include="MonsterCell.h">
+      <Filter>Файлы заголовков\Cellls</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

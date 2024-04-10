@@ -3,9 +3,9 @@
 #include "Cell.h"
 #include "ClearCell.h"
 
-class PlayerCell : public Cell {
+class MonsterCell : public Cell {
 public:
-	//virtual bool hasAdd();
+
 	virtual Cell* copy();
 
 	virtual Cell* operator +(Player& player);

@@ -3,6 +3,10 @@
 #include <conio.h>
 #include <windows.h>
 
+#include "RoomView.h"
+#include "PlayerStatsView.h"
+#include "PlayerStepsView.h"
+#include "GameController.h"
 
 void run(Game game)
 {
@@ -29,45 +33,40 @@ void run(Game game)
 			game.move(RIGHT);
 			break;
 		}
-		system("cls");
-		cout << game;
+		//system("cls");
+		//cout << game;
 	}
 }
 
 int main() {
 	Player player(1, 2);
-	Game game(player);
+	//Game game(player);
 	Game game1(player);
-
-	//Cell* cell = new Cell();
-	//Wall* wall = new Wall();
-	//cout << *cell << *wall <<endl;
-	//cell = wall;
-	//cout << *cell;
-	//return 0;
+	IObserver* view1 = new RoomView(cout);
+	IObserver* view2 = new PlayerStatsView(cout);
+	IObserver* view3 = new PlayerStepsView(cout);
+	game1.addObserver(view1);
+	game1.addObserver(view2);
+	game1.addObserver(view3);
 	{
 		try {
-			ifstream file("maze3.txt");
+			ifstream file("maze4.txt");
 			file >> game1;
-			delete Singltone::getInstance();
+			//delete Singltone::getInstance();
 		} catch (exception e) {
 			cout << e.what();
 			exit(-1);
 		}
 	}
 
-	//{
-	//	ifstream file("maze1.txt");
-	//	Room room;
-	//	file >> room;
-	//	cout << room;
-	//}
-	//game1.loadMaze("maze.txt");
-	//game = game1;
-	cout << game1;
+	
+	//cout << game1;
+
 	try {
-		run(game1);
-	} 
-//	Game game(player);
-//	game = game1;
+		GameController controller(game1);
+		controller.start();
+	}
+	catch(GameOverException e) {
+
+	}
 }

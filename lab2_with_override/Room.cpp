@@ -90,7 +90,7 @@ istream& operator >>(istream& in, Room& room) {
 	room.high = high;
 	room.wide = wide;
 
-	in >> Singltone::getInstance()->getVector();
+	///in >> Singltone::getInstance()->getVector();
 
 	room.cells = new Cell **[high];
 	for (int i = 0; i < high; i++) {
@@ -99,7 +99,7 @@ istream& operator >>(istream& in, Room& room) {
 			in >> room.cells[i][j];
 		}
 	}
-	Singltone::getInstance()->resetCount();
+	//Singltone::getInstance()->resetCount();
 	return in;
 }
 
@@ -119,9 +119,9 @@ istream& operator >>(istream& in, Cell*& cell) {
 		cell = new Treasure();
 		break;
 	case '/':
-		cell = new Exit();
-		break;
-	default:
+		int nextRoom = 0;
+		in >> nextRoom;
+		cell = new Exit(nextRoom);
 		break;
 	}
 

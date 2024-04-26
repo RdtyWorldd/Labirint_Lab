@@ -5,4 +5,5 @@ Entity::~Entity() {}
 
 int Entity::getX() { return x; }
 int Entity::getY() { return y; }
+int Entity::getHP() { return hp; }
 void Entity::move(int _x, int _y) { x = _x; y = _y; }

@@ -1,11 +1,9 @@
 #include "Game.h"
 
-Game::Game(Player& _player) : roomsCount(0), roomNow(-1), rooms(nullptr), player(_player) {
-	monster = new Xmonster();
-	monster->move(2, 2);
-}
+Game::Game(Player& _player) : roomsCount(0), roomNow(-1), rooms(nullptr), player(_player), visionRad(2) {}
 
-Game::Game(const Game& _game): player(_game.player), monster(_game.monster) {
+Game::Game(const Game& _game): player(_game.player) {
+	visionRad = _game.visionRad;
 	roomNow = _game.roomNow;
 	roomsCount = _game.roomsCount;
 	if (_game.rooms == nullptr) {
@@ -17,11 +15,22 @@ Game::Game(const Game& _game): player(_game.player), monster(_game.monster) {
 	for (size_t i = 0; i < roomsCount; i++) {
 		rooms[i] = _game.rooms[i];
 	}
+	observers = _game.observers;
 }
 
 Game::~Game() {
 	delete[] rooms;
 }
+
+void Game::event() {
+	for (IObserver* o : observers)
+		o->event(*this);
+}
+
+int Game::getVisionRad() { return visionRad; }
+Room Game::getRoom() { return rooms[roomNow]; }
+Player& Game::getPlayer() { return player; }
+void Game::addObserver(IObserver* o) { observers.push_back(o); }
 
 void Game::move(Action act) {
 	int x = player.getX();
@@ -50,13 +59,6 @@ void Game::move(Action act) {
 		try {
 			Cell*** cells = rooms[roomNow].getCells();
 			
-			int ox = monster->getX();
-			int oy = monster->getY();
-
-			Cell* t = cells[oy][ox];
-			cells[oy][ox] = (*t) - (*monster);
-			delete t;
-
 			int ox = player.getX();
 			int oy = player.getY();
 			Cell* t = cells[y][x];
@@ -69,11 +71,6 @@ void Game::move(Action act) {
 			delete t;
 
 			player.move(x, y);
-
-			monster->move();
-			t = cells[monster->getY()][monster->getX()];
-			cells[monster->getY()][monster->getX()] = (*t) + (*monster);
-			delete t;
 		}
 		catch (ExitException e) {
 			changeRoom(e.getNextRoom());
@@ -82,6 +79,7 @@ void Game::move(Action act) {
 			//cout <<e.what();
 		}
 	}
+	event();
 }
 
 void Game::changeRoom(int roomId) {
@@ -113,6 +111,7 @@ Game& Game::operator= (const Game& _game) {
 	player = _game.player;
 	roomsCount = _game.roomsCount;
 	roomNow = _game.roomNow;
+	visionRad = _game.visionRad;
 
 	if (rooms != nullptr) {
 		delete[] rooms;
@@ -127,7 +126,7 @@ Game& Game::operator= (const Game& _game) {
 	for (size_t i = 0; i < roomsCount; i++) {
 		rooms[i] = _game.rooms[i];
 	}
-
+	observers = _game.observers;
 	return *this;
 }
 
@@ -151,7 +150,8 @@ istream& operator >>(istream& in, Game& game) {
 	}
 
 	game.rooms[game.roomNow].getCells()[game.player.getY()][game.player.getX()] = new PlayerCell();
-	game.rooms[game.roomNow].getCells()[game.monster->getY()][game.monster->getX()] = new MonsterCell();
+	//game.rooms[game.roomNow].getCells()[game.monster->getY()][game.monster->getX()] = new MonsterCell();
+	game.event();
 	return in;
 }
 

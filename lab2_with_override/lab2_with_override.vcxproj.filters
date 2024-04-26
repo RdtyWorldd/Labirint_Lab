@@ -37,6 +37,12 @@
     <Filter Include="Файлы заголовков\Entity\Monsters">
       <UniqueIdentifier>{70137949-54ae-4479-b446-cad9410f8984}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\view">
+      <UniqueIdentifier>{ae9a335a-e42c-4e9a-ba7d-03a9033ea6fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Исходные файлы\view">
+      <UniqueIdentifier>{7e65f841-9cec-4350-b241-db9c04031f46}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -93,6 +99,18 @@
     <ClCompile Include="GameOverException.h">
       <Filter>Файлы заголовков\Exceptions</Filter>
     </ClCompile>
+    <ClCompile Include="PlayerStatsView.cpp">
+      <Filter>Исходные файлы\view</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerStepsView.cpp">
+      <Filter>Исходные файлы\view</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomView.cpp">
+      <Filter>Исходные файлы\view</Filter>
+    </ClCompile>
+    <ClCompile Include="GameController.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">
@@ -142,6 +160,21 @@
     </ClInclude>
     <ClInclude Include="MonsterCell.h">
       <Filter>Файлы заголовков\Cellls</Filter>
+    </ClInclude>
+    <ClInclude Include="GameController.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="IObserver.h">
+      <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStepsView.h">
+      <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerStatsView.h">
+      <Filter>Файлы заголовков\view</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomView.h">
+      <Filter>Файлы заголовков\view</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

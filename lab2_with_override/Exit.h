@@ -8,7 +8,6 @@ class Exit : public Cell {
 	int nextRoom;
 public:
 	//virtual bool hasAdd();
-	Exit();
 	Exit(int _nextRoom): nextRoom(_nextRoom) {}
 
 	virtual Cell* copy();

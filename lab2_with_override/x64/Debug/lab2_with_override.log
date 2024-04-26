@@ -1,2 +1,16 @@
-﻿  Game.cpp
+﻿  ClearCell.cpp
+  Exit.cpp
+  Game.cpp
+  GameController.cpp
+  MonsterCell.cpp
+  Player.cpp
+  PlayerCell.cpp
+  PlayerStatsView.cpp
+  PlayerStepsView.cpp
+  Room.cpp
+  RoomView.cpp
+  Treasure.cpp
+  Wall.cpp
+  main.cpp
+  Создание кода...
   lab2_with_override.vcxproj -> E:\пары\основы программирования\семестр 2\lab2_with_override\x64\Debug\lab2_with_override.exe

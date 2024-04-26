@@ -27,5 +27,5 @@ Cell* ClearCell::operator -(Monster& monster) {
 }
 
 void ClearCell::visit(ostream& out) const {
-	out << " ";
+	out << ".";
 }

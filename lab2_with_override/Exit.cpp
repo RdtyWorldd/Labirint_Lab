@@ -1,9 +1,5 @@
 #include "Exit.h"
 
-Exit::Exit() {
-	nextRoom = Singltone::getInstance()->getNext();
-}
-
 Cell* Exit::copy() {
 	return new Exit(nextRoom);
 }
